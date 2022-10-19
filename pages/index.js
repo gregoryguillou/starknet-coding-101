@@ -15,10 +15,10 @@ export const Index = () => {
       <h2>Argent X</h2>
       <ol>
         <li>
-          <Link href="/argent-x">Simple Argent-X multicall</Link>
+          <Link href="/authorize-x">Get and Sign w/ Argent-X</Link>
         </li>
         <li>
-          <Link href="/authorize-x">Get and Sign w/ Argent-X</Link>
+          <Link href="/argent-x">Simple Argent-X multicall</Link>
         </li>
       </ol>
       <h2>Wallet</h2>
