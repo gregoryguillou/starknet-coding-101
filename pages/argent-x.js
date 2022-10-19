@@ -4,8 +4,6 @@ import Link from "next/link";
 import InputTextWithCopy from "components/InputTextWithCopy";
 import IncrementMulticall from "components/IncrementMulticall";
 
-const NavLink = styled(Link)``;
-
 const Form = styled.div`
   display: flex;
   flex-direction: column;
@@ -49,7 +47,7 @@ export const ArgentX = () => {
       </Form>
       <h2>Execute MultiCall</h2>
       <IncrementMulticall account={account} />
-      <NavLink href="/">Back</NavLink>
+      <Link href="/">Back</Link>
     </main>
   );
 };

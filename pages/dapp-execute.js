@@ -6,6 +6,7 @@ import { SequencerProvider, Signer } from "starknet";
 import { getKeyPair, getStarkKey } from "starknet/utils/ellipticCurve";
 import IncrementCounter from "components/IncrementCounter";
 import { SessionAccount } from "@argent/x-sessions";
+import { originalIncrementContract } from "lib/constants";
 
 const Form = styled.div`
   display: flex;
@@ -22,9 +23,6 @@ const Block = styled.div`
 const ExpandedInput = styled.input`
   width: 100%;
 `;
-
-const incrementContractAddress =
-  "0x51e94d515df16ecae5be4a377666121494eb54193d854fcf5baba2b0da679c6";
 
 export const DappExecute = () => {
   const [dappPrivateKey] = useLocalStorage("SnapSessionPrivateKey", "");
@@ -79,7 +77,7 @@ export const DappExecute = () => {
 
   const callGetCounter = async () => {
     const output = await account.callContract({
-      contractAddress: incrementContractAddress,
+      contractAddress: originalIncrementContract,
       entrypoint: "get_count",
     });
     if (!output.result || output.result.length === 0) {
@@ -116,7 +114,7 @@ export const DappExecute = () => {
       <h2>call get_count</h2>
       <Form>
         <label>Contract Address</label>
-        <input type="text" value={incrementContractAddress} readOnly />
+        <input type="text" value={originalIncrementContract} readOnly />
         <label>Count Value</label>
         <Block>
           <input type="button" value="check" onClick={callGetCounter} />

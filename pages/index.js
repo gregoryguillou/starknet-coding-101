@@ -3,6 +3,12 @@ import Link from "next/link";
 export const Index = () => {
   return (
     <main>
+      <h2>Dapp with Session Key</h2>
+      <ol>
+        <li>
+          <Link href="/dapp">Simple Session</Link>
+        </li>
+      </ol>
       <h2>Dapp</h2>
       <ol>
         <li>

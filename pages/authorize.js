@@ -6,6 +6,7 @@ import { createSession } from "@argent/x-sessions";
 import { Account, SequencerProvider } from "starknet";
 import { getKeyPair } from "starknet/utils/ellipticCurve";
 import InputTextWithCopy from "components/InputTextWithCopy";
+import { originalIncrementContract } from "lib/constants";
 
 const NavLink = styled(Link)``;
 
@@ -39,13 +40,11 @@ export const Authorize = () => {
 
   const policies = [
     {
-      contractAddress:
-        "0x51e94d515df16ecae5be4a377666121494eb54193d854fcf5baba2b0da679c6",
+      contractAddress: originalIncrementContract,
       selector: "increment",
     },
     {
-      contractAddress:
-        "0x51e94d515df16ecae5be4a377666121494eb54193d854fcf5baba2b0da679c6",
+      contractAddress: originalIncrementContract,
       selector: "increment_uint",
     },
   ];

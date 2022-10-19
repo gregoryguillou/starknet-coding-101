@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createSession } from "@argent/x-sessions";
 import InputTextWithCopy from "components/InputTextWithCopy";
+import { originalIncrementContract } from "lib/constants";
 
 const NavLink = styled(Link)``;
 
@@ -57,8 +58,7 @@ export const Authorize = () => {
 
   const policies = [
     {
-      contractAddress:
-        "0x51e94d515df16ecae5be4a377666121494eb54193d854fcf5baba2b0da679c6",
+      contractAddress: originalIncrementContract,
       selector: "increment",
     },
   ];

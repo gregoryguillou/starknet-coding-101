@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useExecute } from "lib";
-import useLocalStorage from "lib/useLocalStorage";
 
 const Form = styled.div`
   display: flex;
@@ -8,18 +7,10 @@ const Form = styled.div`
   width: 100%;
 `;
 
-const incrementContract =
-  "0x51e94d515df16ecae5be4a377666121494eb54193d854fcf5baba2b0da679c6";
-
-export const IncrementCounter = ({ account }) => {
-  const [incrementContractAddress] = useLocalStorage(
-    "SnapIncrementContractAddress",
-    incrementContract
-  );
-
+export const IncrementCounter = ({ account, contractAddress }) => {
   const [status, transactionHash, execute] = useExecute(
     account,
-    incrementContractAddress,
+    contractAddress,
     "increment"
   );
 
