@@ -16,8 +16,6 @@ export const IncrementCounter = ({ account, contractAddress }) => {
 
   return (
     <main>
-      <h2>increment counter</h2>
-      <p>this section shows how to execute a transaction.</p>
       <Form>
         <label>Transaction Hash</label>
         <input type="text" value={transactionHash} readOnly />

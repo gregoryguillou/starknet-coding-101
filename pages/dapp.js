@@ -47,16 +47,24 @@ export const DappRequest = () => {
       <h3>2. Connect to Argent-X</h3>
       <ArgentX setArgentAccount={setArgentXAccount} />
       <h3>3. Request an Authorization</h3>
-      <Authorize
-        sessionPrivateKey={sessionPrivateKey}
-        argentxAccount={argentXAccount}
-        setSessionAccount={setSessionAccount}
-      />
+      {argentXAccount ? (
+        <Authorize
+          sessionPrivateKey={sessionPrivateKey}
+          argentxAccount={argentXAccount}
+          setSessionAccount={setSessionAccount}
+        />
+      ) : (
+        <div>blocked</div>
+      )}
       <h3>4. Use the Authorization</h3>
-      <IncrementCounter
-        account={sessionAccount}
-        contractAddress={originalIncrementContract}
-      />
+      {sessionAccount ? (
+        <IncrementCounter
+          account={sessionAccount}
+          contractAddress={originalIncrementContract}
+        />
+      ) : (
+        <div>blocked</div>
+      )}
       <Link href="/">Back</Link>
     </main>
   );

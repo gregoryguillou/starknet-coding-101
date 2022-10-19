@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { createSession, SessionAccount } from "@argent/x-sessions";
+import {
+  createSession,
+  SessionAccount,
+  SESSION_PLUGIN_CLASS_HASH,
+} from "@argent/x-sessions";
 import { originalIncrementContract } from "lib/constants";
 import { SequencerProvider, Signer } from "starknet";
 import { getKeyPair, getStarkKey } from "starknet/utils/ellipticCurve";
+import { toBN } from "starknet/utils/number";
 
 const Form = styled.div`
   display: flex;
@@ -18,6 +23,37 @@ export const Authorize = ({
 }) => {
   const [sessionPublicKey, setSessionPublicKey] = useState();
   const [auth, setAuth] = useState();
+  const [validAccount, setValidAccount] = useState(false);
+
+  useEffect(() => {
+    if (!argentxAccount.address || !argentxAccount.provider) {
+      console.log("cannot check is_plugin");
+      return;
+    }
+    (async () => {
+      try {
+        const result = await argentxAccount.provider.callContract(
+          {
+            contractAddress: argentxAccount.address,
+            entrypoint: "is_plugin",
+            calldata: [toBN(SESSION_PLUGIN_CLASS_HASH).toString(10)],
+          },
+          "latest"
+        );
+        console.log(`this is a plugin account`);
+        if (
+          result?.result?.length > 0 &&
+          (result.result[0] === "0x1" || result.result[0] === "1")
+        ) {
+          setValidAccount(true);
+          return;
+        }
+      } catch (e) {
+        console.log(`could not check account ${argentxAccount.address}`);
+        return;
+      }
+    })();
+  }, [argentxAccount]);
 
   useEffect(() => {
     if (!sessionPrivateKey) {
@@ -74,18 +110,31 @@ export const Authorize = ({
   };
 
   return (
-    <Form>
-      <input type="button" value="Sign" onClick={authorize} />
-      <label>Signed Authorization</label>
-      <textarea rows="10" value={auth ? JSON.stringify(auth) : ""} readOnly />
-      <input
-        type="button"
-        value="copy manifest"
-        onClick={() => {
-          copy(auth);
-        }}
-      />
-    </Form>
+    <>
+      {validAccount ? (
+        <Form>
+          <input type="button" value="Sign" onClick={authorize} />
+          <label>Signed Authorization</label>
+          <textarea
+            rows="10"
+            value={auth ? JSON.stringify(auth) : ""}
+            readOnly
+          />
+          <input
+            type="button"
+            value="copy manifest"
+            onClick={() => {
+              copy(auth);
+            }}
+          />
+        </Form>
+      ) : (
+        <p>
+          argent-x account does not have the plugin installed. Check you have
+          activated the "Experimental" feature and deployed the plugin.
+        </p>
+      )}
+    </>
   );
 };
 
